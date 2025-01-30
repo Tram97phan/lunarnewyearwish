@@ -56,6 +56,13 @@
             font-size: 18px;
 }
         
+    .slide {
+        display: none;
+    }
+
+    .slide.active {
+        display: block;
+    }
 
     </style>
 </head>
@@ -64,27 +71,66 @@
         <div id="slide1" class="slide active">
             <h2>How are you feeling today?</h2>
             <div class="radio-options">
-                <input type="radio" name="feeling" value="Good"> <span>Fantastic</span>
+                <input type="radio" name="feeling" value="Fantastic"> <span>Fantastic</span>
             </div>
             <div class="radio-options">
-                <input type="radio" name="feeling" value="Normal"> Good
+                <input type="radio" name="feeling" value="Good"> Good
             </div>
             <div class="radio-options">
-                <input type="radio" name="feeling" value="Kinda bad"> Normal
+                <input type="radio" name="feeling" value="Normal"> Normal
             </div>
             <div class="radio-options">
-                <input type="radio" name="feeling" value="Kinda bad"> Could be better
+                <input type="radio" name="feeling" value="Kinda bad"> Kinda bad
             </div>
-            <button onclick="nextSlide(1)">Send</button>
+            <button onclick="handleNext()">Send</button>
         </div>
         
+         <!-- Consolation Slide -->
+        <div id="consolation" class="slide">
+            <h2>Are you ok? What's the matter?</h2>
+            <input class="reason-input" type="text" id="reason" placeholder="Share your thoughts...">
+            <button onclick="nextSlide('slide2')">Next</button>
+        </div>
+
+        <!-- Congrats Slide -->
+        <div id="congrats" class="slide">
+            <h2>Wooh, someone's in a good mood!</h2>
+            <button onclick="nextSlide('slide2')">Next</button>
+        </div>
+
         <div id="slide2" class="slide">
+            <h2>What did you eat yesterday</h2>
+            <input class="eat-input" type="text" id="eat" placeholder="Write here"><br>
+            <button onclick="nextSlide('slide3')">Send</button>
             <h2>Today is Lunar New Year, I want to give you - my dear friend a small gift!</h2>
             <input class="wish-input" type="text" id="wish" placeholder="Write your wish here"><br>
             <button onclick="nextSlide(2)">Send</button>
         </div>
         
         <div id="slide3" class="slide">
+            <h2>Imagine the sceneries below, which one would you feel the most relaxed in?</h2>
+            <div class="radio-options">
+                <input type="radio" name="scenario" value="A quiet sunset at the beach"> <span>A quiet sunset at the beach</span>
+            </div>
+            <div class="radio-options">
+                <input type="radio" name="scenario" value="A peaceful farm in the countryside"> A peaceful farm in the countryside
+            </div>
+            <div class="radio-options">
+                <input type="radio" name="scenario" value="A heart-warming gathering nearby the fireplace"> A heart-warming gathering nearby the fireplace
+            </div>
+            <div class="radio-options">
+                <input type="radio" name="scenario" value="An exciting theme park with your close friends"> An exciting theme park with your close friends
+            </div>
+            <button onclick="nextSlide('slide4')">Send</button>
+        </div>
+
+        <div id="slide4" class="slide">
+            <h2>Five things that make you happy</h2>
+            <input class="happy-input" type="text" id="happy" placeholder="List them here"><br>
+            <button onclick="nextSlide('slide5')">Send</button>
+        </div>
+
+        <div id="slide5" class="slide">
             <h2>Your wish is my command.</h2>
             <img style="width: 50%" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtBb6_9xgWCcTOcy5rkevevJhNhhh3ekD0KuLML6IFXWXqu7C-yrubBT46aOAhM2qvHbAjcUwLEhtxviTypou_yqbIquoq9f7WiWxGu1QxF1zMIjw85gDhN3Wkp-X_ZvxLc8b42JtEONDC/s800/hanabi_animal.png" alt="Fireworks">
             <p>Tram will send you the small favor soon!</p>
@@ -93,51 +139,106 @@
     
     <script>
         let feeling = "";
+        let eat = "";
+        let reason = "";
+        let scenario = "";
 
-        function nextSlide(slideNum) {
-            if (slideNum === 1) {
-                let selectedFeeling = document.querySelector('input[name="feeling"]:checked');
-                if (!selectedFeeling) {
-                    alert("Please choose an option");
-                    return;
-                }
-                feeling = selectedFeeling.value;
-                sendToGoogleSheets({ feeling });
-            }
-            
-            if (slideNum === 2) {
-                let wish = document.getElementById("wish").value;
-                if (wish.trim() === "") {
-                    alert("Please write your wish");
-                    return;
-                }
-                sendToGoogleSheets({ feeling, wish });
-            }
-            
-            document.getElementById("slide" + slideNum).classList.remove("active");
-            document.getElementById("slide" + (slideNum + 1)).classList.add("active");
+        function handleNext() {
+        let selectedValue = document.querySelector('input[name="feeling"]:checked');
+
+        if (!selectedValue) {
+            alert("Please select an option before proceeding.");
+            return;
         }
+
+        feeling = selectedValue.value;
+
+        if (feeling === "Kinda bad") {
+            showSlide("consolation");
+        } else if (feeling === "Fantastic") {
+            showSlide("congrats");
+        } else {
+            showSlide("slide2"); // Move to slide2 where the user enters "eat"
+        }
+    }
+
+        function nextSlide(nextSlideId) {
+        let currentSlide = document.querySelector(".slide.active");
         
-        // function sendToGoogleSheets(data) {
-        //     const scriptURL = 'https://script.google.com/macros/s/AKfycbxBjHGXLTUm0wax4o85R9Lhr2zj9UCUfAclR9rtKVEBla80be6uWFbfcpM70RwNTCYo/exec';
-        //     fetch(scriptURL, {
-        //         method: 'POST',
-        //         body: JSON.stringify(data),
-        //         headers: { 'Content-Type': 'application/json' }
-        //     }).catch(error => console.error('Error!', error.message));
-        // }
+        if (!currentSlide) {
+            console.error("No active slide found.");
+            return;
+        }
+
+        // If the user is on the consolation slide, capture the reason
+        if (nextSlideId === "slide2") {
+            reason = document.getElementById("reason").value.trim();  // Capture reason
+        }
+
+        if (nextSlideId === "slide3") {
+            eat = document.getElementById("eat").value;
+            if (eat.trim() === "") {
+                alert("Please write what you ate");
+                return;
+            }
+        } 
+ 
+
+        //scenario, happy 
+         if (nextSlideId === "slide4") {
+            let selectedValue = document.querySelector('input[name="scenario"]:checked');
+            if (!selectedValue) {
+            alert("Please select an option before proceeding.");
+            return;
+        }
+
+        scenario = selectedValue.value;    
+        } 
+
+        if (nextSlideId === "slide5") {
+            happy = document.getElementById("happy").value;
+            if (happy.trim() === "") {
+                alert("Please answer the question");
+                return;
+            }
+            sendToGoogleSheets({ feeling, reason, eat, scenario, happy });
+
+       
+        } 
+  
+
+        // Hide current slide
+        currentSlide.classList.remove("active");
+
+        // Show next slide
+        document.getElementById(nextSlideId).classList.add("active");
+    }
+
+        function showSlide(slideId) {
+            document.querySelectorAll(".slide").forEach(slide => {
+                slide.classList.remove("active");
+            });
+
+            document.getElementById(slideId).classList.add("active");
+        }
 
         function sendToGoogleSheets(data) {
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwmcaTIi4pz-4jAg054XZQHb8GbO8lTcYFbljnndcTP8Cz4MvZH1rEOVHZf-wcWbyNt/exec';
-    fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors', // Use 'no-cors' to bypass CORS errors
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(() => console.log("Data sent successfully"))
-    .catch(error => console.error("Error:", error));
-}
+        console.log("Sending data:", data); // Debugging
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyeqIlvrCH5k6aOzaDgoIdNOuxMyZdMDIW-K5e2cNPirZFZUn55PqNXUISAPxLJUjna/exec';
+        
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // Change from 'no-cors' to 'cors'
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json()) // Convert response to JSON
+        .then(data => console.log("Success:", data))
+        .catch(error => console.error("Error:", error));
+    }
+
+
     </script>
 </body>
 </html>

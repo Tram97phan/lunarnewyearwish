@@ -13,6 +13,7 @@
             align-items: center;
             height: 100vh;
             background-color: #ffeedd;
+            transition: background-color 1s ease-in-out;
         }
         .container {
             width: 80%;
@@ -22,12 +23,14 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .slide {
             display: none;
         }
         .active {
             display: block;
         }
+
         button {
             padding: 10px 20px;
             background: orange;
@@ -48,21 +51,37 @@
             text-align: left;
             margin-left: 50px;
         }
+
+        .radio-options-long {
+            text-align: left;
+        }
         
+        .radio-options-long input {
+            width: 20px; height: 20px;
+        }
+
         .wish-input {
             width: 80%;
             height: 50px;
             border-radius: 10px;
             font-size: 18px;
+            padding-left: 10px;
 }
-        
-    .slide {
-        display: none;
-    }
 
-    .slide.active {
-        display: block;
-    }
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .long-input {
+            font-size: 18px;
+            width: 90%;
+            border-radius: 10px;
+            padding: 10px;
+        }
 
     </style>
 </head>
@@ -88,7 +107,7 @@
          <!-- Consolation Slide -->
         <div id="consolation" class="slide">
             <h2>Are you ok? What's the matter?</h2>
-            <input class="reason-input" type="text" id="reason" placeholder="Share your thoughts...">
+            <input class="wish-input" type="text" id="reason" placeholder="Share your thoughts...">
             <button onclick="nextSlide('slide2')">Next</button>
         </div>
 
@@ -99,38 +118,98 @@
         </div>
 
         <div id="slide2" class="slide">
-            <h2>What did you eat yesterday</h2>
-            <input class="eat-input" type="text" id="eat" placeholder="Write here"><br>
+            <h3>🥤🥗🍔🍗🍟🥓</h3>
+            <h2>What did you eat yesterday?</h2>
+            <input class="wish-input" type="text" id="eat" placeholder="Write here"><br>
             <button onclick="nextSlide('slide3')">Send</button>
         </div>
         
         <div id="slide3" class="slide">
             <h2>Imagine the sceneries below, which one would you feel the most relaxed in?</h2>
-            <div class="radio-options">
+            <div class="radio-options-long">
                 <input type="radio" name="scenario" value="A quiet sunset at the beach"> <span>A quiet sunset at the beach</span>
             </div>
-            <div class="radio-options">
+            <div class="radio-options-long">
                 <input type="radio" name="scenario" value="A peaceful farm in the countryside"> A peaceful farm in the countryside
             </div>
-            <div class="radio-options">
+            <div class="radio-options-long">
                 <input type="radio" name="scenario" value="A heart-warming gathering nearby the fireplace"> A heart-warming gathering nearby the fireplace
             </div>
-            <div class="radio-options">
+            <div class="radio-options-long">
                 <input type="radio" name="scenario" value="An exciting theme park with your close friends"> An exciting theme park with your close friends
             </div>
             <button onclick="nextSlide('slide4')">Send</button>
         </div>
 
         <div id="slide4" class="slide">
-            <h2>Five things that make you happy</h2>
-            <input class="happy-input" type="text" id="happy" placeholder="List them here"><br>
+            <h2>Five things that make you happy😊</h2>
+            <input class="wish-input" type="text" id="happy" placeholder="List them here"><br>
             <button onclick="nextSlide('slide5')">Send</button>
         </div>
 
         <div id="slide5" class="slide">
-            <h2>Your wish is my command.</h2>
-            <img style="width: 50%" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtBb6_9xgWCcTOcy5rkevevJhNhhh3ekD0KuLML6IFXWXqu7C-yrubBT46aOAhM2qvHbAjcUwLEhtxviTypou_yqbIquoq9f7WiWxGu1QxF1zMIjw85gDhN3Wkp-X_ZvxLc8b42JtEONDC/s800/hanabi_animal.png" alt="Fireworks">
-            <p>Tram will send you the small favor soon!</p>
+            <h2>What is your favorite movie/drama? Why do you like it?🎥</h2>
+            <textarea rows="8" cols="50" type="text" id="movie" placeholder="Write here" class="long-input"></textarea>
+            <button onclick="nextSlide('slide6')">Send</button>
+        </div>
+
+        <div id="slide6" class="slide">
+            <h2>If you only had 2 years ahead to live, what would you do / want to achieve?😱</h2>
+            <textarea rows="8" cols="50" type="text" id="year" placeholder="Rob the bank and travel the world? JK" class="long-input"></textarea>
+            <button onclick="nextSlide('slide7')">Send</button>
+        </div>
+
+        <div id="slide7" class="slide">
+            <h3 style="text-align: left;">hmm I see. that's a very interesting plan.</h3>
+            <h3 style="text-align: left;">Now let's make a trip to the past shall we.</h3>
+            <img style="width: 90%" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGprajZobGJwaDk3eHB5OW53MzVsZzUydWxtYWJmd3JhdnhneGdydyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ogwFR7biTDlcrKD3G/giphy.gif" alt="Time Travel GIF">
+            <button style="font-size: 15px" onclick="nextSlide('slide8')">yes, take me down the memory lane</button>
+        </div>
+
+        <div id="slide8" class="slide">
+            <h2>What's your favorite childhood memory?</h2>
+            <input class="wish-input-tall" type="text" id="memory" placeholder="Write it here"><br>
+            <button onclick="nextSlide('slide9')">Send</button>
+        </div>
+
+        <div id="slide9" class="slide">
+            <h2>What was your proudest achievement?</h2>
+            <input class="wish-input" type="text" id="proud" placeholder="Write it here"><br>
+            <button onclick="nextSlide('slide10')">Send</button>
+        </div>
+
+    
+        <div id="slide10" class="slide">
+            <h3 style="text-align: left;">okay, now, one last, VERY SERIOUS question. Are you ready?</h3>
+            <div style="display: flex; justify-content: space-between;">
+                <button style="color: black; font-weight: normal; background: transparent; padding-left: 0;"  onclick="nextSlide('slide11')">No I'm not ready</button>
+                <button class="ready"  onclick="nextSlide('slide11')">Bring it on</button>     
+            </div>
+        </div>
+
+        <div id="slide11" class="slide">
+            <h2>What is your thought on this picture? </h2>
+            <img style="width: 90%" src="https://raw.githubusercontent.com/Tram97phan/popquiz/refs/heads/main/CwK9Yz6VMAEnP4J.jfif" alt="Kabedon">
+            <div class="radio-options-long">
+                <input type="radio" name="kabedon" value="I want to do that with Febin"> <span>I want to do that with a boy</span>
+            </div>
+            <div class="radio-options-long">
+                <input type="radio" name="kabedon" value="I want to do that with Lithin"> I want a boy to do it to me
+            </div>
+            <div class="radio-options-long">
+                <input type="radio" name="kabedon" value="I want Stan to do that to me"> I want to see two boys doing it
+            </div>
+            <button onclick="nextSlide('slide12')">Send</button>
+        </div>
+
+        <div id="slide12" class="slide">
+            <h2>Congratulations! You've completed the quiz! </h2>
+            <h2>Did you pass the last MOST SERIOUS question?</h2>
+            <h2>o( ˶^▾^˶ )o</h2>
+            <h4>Thank you for sharing your thoughts.
+            I learned a lot about you! I hope this quiz makes our friendship stronger and your day a bit brighter 🌞</h4>
+            <img style="width: 50%" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgt4guFJa_-39m2t3pcAahaXHJAChYVr4AdU4CR4-Cby-_eV_dsPafwoL3EXpaZDEKqXqe-veLnGeccuNM9Skix47_4rNwpWdHcvMtjvr4aZ_Eho9SqhaE0n-ASoQ4RkcMMXZSQLbJfj1jL/s1125/party_drink_rojou_noimikai.png" alt="Fireworks">
+            <p style="margin-top: 0">また（ジュース）飲みに行きましょう～</p>
         </div>
     </div>
     
@@ -139,6 +218,12 @@
         let eat = "";
         let reason = "";
         let scenario = "";
+        let happy = "";
+        let movie = "";
+        let year = "";
+        let memory = "";
+        let proud = "";
+        let kabedon = "";
 
         function handleNext() {
         let selectedValue = document.querySelector('input[name="feeling"]:checked');
@@ -181,7 +266,7 @@
         } 
  
 
-        //scenario, happy 
+        //scenario, happy, movie, year 
          if (nextSlideId === "slide4") {
             let selectedValue = document.querySelector('input[name="scenario"]:checked');
             if (!selectedValue) {
@@ -198,18 +283,70 @@
                 alert("Please answer the question");
                 return;
             }
-            sendToGoogleSheets({ feeling, reason, eat, scenario, happy });
+        } 
 
-       
+        if (nextSlideId === "slide6") {
+            movie = document.getElementById("movie").value;
+            if (movie.trim() === "") {
+                alert("Please answer the question");
+                return;
+            }
+        } 
+
+        if (nextSlideId === "slide7") {
+            year = document.getElementById("year").value;
+            if (year.trim() === "") {
+                alert("Please answer the question");
+                return;
+            }
+        } 
+
+        if (nextSlideId === "slide9") {
+            memory = document.getElementById("memory").value;
+            if (memory.trim() === "") {
+                alert("Please answer the question");
+                return;
+            }
+        } 
+
+        if (nextSlideId === "slide10") {
+            proud = document.getElementById("proud").value;
+            if (proud.trim() === "") {
+                alert("Please answer the question");
+                return;
+            }
+        } 
+
+        if (nextSlideId === "slide12") {
+            let selectedValue = document.querySelector('input[name="kabedon"]:checked');
+            if (!selectedValue) {
+            alert("Please select an option before proceeding.");
+            return;
+        }
+
+        kabedon = selectedValue.value;    
+        sendToGoogleSheets({ feeling, reason, eat, scenario, happy, movie, year, memory, proud, kabedon});
+
         } 
   
+  
+         //changing background color
+         if (nextSlideId === "slide8" || nextSlideId === "slide9") {
+            document.body.style.backgroundColor = "lightgray";
+        }
 
+        if (nextSlideId === "slide10") {
+            document.body.style.backgroundColor = "#ffeedd";
+        }
+  
+
+        
         // Hide current slide
         currentSlide.classList.remove("active");
 
         // Show next slide
         document.getElementById(nextSlideId).classList.add("active");
-    }
+}
 
         function showSlide(slideId) {
             document.querySelectorAll(".slide").forEach(slide => {
@@ -222,7 +359,7 @@
         function sendToGoogleSheets(data) {
         console.log("Sending data:", data); // Debugging
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyeqIlvrCH5k6aOzaDgoIdNOuxMyZdMDIW-K5e2cNPirZFZUn55PqNXUISAPxLJUjna/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz_Ah2EdiRisvOGlN1ih5zPBbJgkqFwv6IBKcoaQIB9iCqOVTksc_WA2KxrlBpclcrD/exec';
         
         fetch(scriptURL, {
             method: 'POST',
